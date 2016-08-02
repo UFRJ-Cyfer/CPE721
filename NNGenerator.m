@@ -1,6 +1,4 @@
-function [L]= NNGenerator( neurons, input, target,...
-                              epoch, cost_function,...
-                              inner_activation, outter_activation)
+function [L]= NNGenerator( neurons, input, target )
 %NNGENERATOR Summary of this function goes here
 %   Detailed explanation goes here
 
