@@ -3,7 +3,7 @@ function [ Z, dZ ] = linearAct( X )
 %   Detailed explanation goes here
 
     Z = X;
-    dZ = -1;
+    dZ = 1;
 
 end
 

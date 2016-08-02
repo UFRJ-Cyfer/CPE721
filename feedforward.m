@@ -1,4 +1,4 @@
-function [ output, error, L ] = feedforward( L, input, target, ...
+function [ output, L ] = feedforward( L, input,...
     inner_activation,...
     outter_activation)
 %FEEDFORWARD Summary of this function goes here
@@ -6,9 +6,17 @@ function [ output, error, L ] = feedforward( L, input, target, ...
 neurons = L.neurons;
 normal = 1:length(neurons)+1;
 
+if isrow(input)
+    input = input';
+end
+
 L(1).input = input;
 for n=normal
-    L(n).Y = (L(n).weight)*L(n).input + L(n).bias;
+    if isempty(L(n).bias)
+         L(n).Y = (L(n).weight)*L(n).input;
+    else
+         L(n).Y = (L(n).weight)*L(n).input + L(n).bias;
+    end
     [L(n).Z, L(n).dZ] = inner_activation(L(n).Y);
     L(n+1).input = L(n).Z;
 end
@@ -16,7 +24,6 @@ end
 L(n+1).input = L(n).Z;
 
 output = L(n).Z;
-error = target - output;
 
 end
 
