@@ -1,15 +1,15 @@
-neurons = [6 6];
+neurons = [10];
 
-csi = 0.9;          % momentum 
-eta = [0.9 0.9]*1e-1;  %learning rate for BIAS and WEIGHT
-epoch = 13;
-span = 0.7;
+csi = 0.8;          % momentum 
+eta = [1.5 1.5]*1e-2;  %learning rate for BIAS and WEIGHT
+epoch = 10;
+span = 0.2;
 runs = 4e3;
-lambda = 0.0;
+lambda = 0.4;
 
 [input,target] = extractDataSets('F:\BitBucket\ProjetoFinal\projetofinal\FES2CHMAIN24_V85\Teste\Antigo\',...
                         'Adriano1204PIRele_4Ciclos.txt');
-% input = input(3:end,:);
+input = input(2:end,:);
 target = (target - mean(target))/std(target);
                     
 for k=1:size(input,1)-2;

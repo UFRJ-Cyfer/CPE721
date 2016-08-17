@@ -1,4 +1,4 @@
-function [ L , J] = trainBPBatch( L , input, target, epoch,runs,...
+function [ L , J] = trainlmBatch( L , input, target, epoch,runs,...
     csi,eta,lambda,...
     cost_function,...
     inner_activation, ...
@@ -15,6 +15,7 @@ etaB = eta(1);
 etaW = eta(2);
 beta = 0.99;
 delta = 1e-6;
+mu = 0.1;
 fprintf('Starting training\n');
 % J = zeros(runs,1);
 for n=normal
@@ -29,9 +30,7 @@ while begin
         L(k).db = zeros(size(L(k).bias));
         L(k).dW = zeros(size(L(k).weight));
     end;
-    
-    for ep = 1:epoch
-        
+            
             [output,L] = feedforward(L,input(:,m),...
                 inner_activation,outter_activation);
 
@@ -60,16 +59,23 @@ while begin
             % BP error
             L(length(neurons)+1+1).alpha = dJ;
             L(length(neurons)+1+1).weight = eye(length(err));
+            L(length(neurons)+1).delta = diag(L(length(neurons)+1).dZ);
             
-            for n=inverted
-                L(n).alpha = diag(L(n).dZ)*(L(n+1).weight)'*L(n+1).alpha;
-                L(n).db = L(n).db + L(n).alpha;
-                L(n).dW = L(n).dW + L(n).alpha*(L(n).input)';
-                
-                L(n).dW = L(n).dW - L(n).weight*lambda/100;
+            for size(output,2)
+%                 err = output-target(:,m);
+                for length(neurons)+1
+                    for size(L().weight,1)
+                        
+                    end
+                    delta = delta*slope;
+                end
             end
             m = m+1; if(m>size(input,2)), m=1; end
-    end
+    J(i) = J(i)/epoch;
+    H = J(i)'*J(i) + mu*eye(size(J(i)));
+    
+    L(n).dW = 
+    
     
     for k=normal
         if isempty(L(k).bias)
@@ -81,7 +87,7 @@ while begin
         L(k).weight = L(k).weight + Delta(k).weight;
     end;
     
-    J(i) = J(i)/epoch;
+    
     
     if (i>1)
         if(abs(J(i)-J(i-1))/(J(i)) < delta || i > runs)

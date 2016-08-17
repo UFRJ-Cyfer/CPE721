@@ -10,6 +10,9 @@ if isrow(input)
     input = input';
 end
 
+% L(n).Y = net values
+% L(n).Z = Output
+% L(n).dZ = Slope
 L(1).input = input;
 for n=normal
     if isempty(L(n).bias)
