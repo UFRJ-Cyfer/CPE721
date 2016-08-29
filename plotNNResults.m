@@ -37,5 +37,12 @@ err = zeros(size(target));
     
     figure;
     plot(output)
+    figure;
+    plot(output,'r'); 
+    hold on;
+     plot(target,'k--');  
+%   legend('NN Input','NN Output','Target');
+    legend('NN Output','Target');
+    
 end
 

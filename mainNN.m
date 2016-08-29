@@ -1,11 +1,11 @@
 
 
-neurons = [10 10];
+neurons = [13];
 
 csi = 0;          % momentum 
-eta = [0.4 0.4];  %learning rate for BIAS and WEIGHT
+eta = [0.2 0.2];  %learning rate for BIAS and WEIGHT
 span = 0.2;
-runs = 8000;
+runs = 8e3;
 lambda = 0;
 
 [input,target] = extractDataSets('F:\BitBucket\ProjetoFinal\projetofinal\FES2CHMAIN24_V85\Teste\Antigo\',...

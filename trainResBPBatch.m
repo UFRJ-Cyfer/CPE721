@@ -21,7 +21,8 @@ deltaMAX = 10;
 antigo = struct;
 deltaMIN = 0;
 a = 1.05;
-
+maxA = 0.2;
+a_ = 0.05;
 fprintf('Starting training\n');
 Jmin = 1e6;
 % J = zeros(runs,1);
@@ -84,6 +85,12 @@ while begin
             minus = antigo(k).db.*L(k).db < 0;
             
             b = antigo(k).db./(antigo(k).db - L(k).db);
+            
+            a_ = a_*a;
+            
+%             if(a_ > maxA)
+%                 a_ = maxA;
+%             end
             
             L(k).db(plus) = L(k).db(plus)*a;
             L(k).db(minus) = L(k).db(minus).*b(minus);

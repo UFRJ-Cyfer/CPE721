@@ -18,3 +18,4 @@ a = net(input);
 plot(a)
 hold on
 plot(target)
+legend('NN Output','Target')
