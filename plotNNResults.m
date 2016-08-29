@@ -9,7 +9,7 @@ err = zeros(size(target));
 % output = zeros(size()); % caso simples de aproximador universal
 
     for m=1:size(input,2)
-        [output(m),~] = feedforward(L,input(:,m),...
+        [output(m),L] = feedforward(L,input(:,m),...
             inner_activation,outter_activation);
         if m < length(target)
             err(m) = target(:,m) - output(m);
@@ -34,5 +34,8 @@ err = zeros(size(target));
     subplot(3,1,3)
     plot(J);
     legend('Cost');
+    
+    figure;
+    plot(output)
 end
 

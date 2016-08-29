@@ -2,13 +2,13 @@ function [L]= NNGenerator( neurons, span, input, target )
 %NNGENERATOR Summary of this function goes here
 %   Detailed explanation goes here
 
-    if isrow(input)
-        input = input';
-    end
-    
-    if isrow(target)
-        target = target';
-    end
+%     if isrow(input)
+%         input = input';
+%     end
+%     
+%     if isrow(target)
+%         target = target';
+%     end
    
     L.neurons = neurons;
     
@@ -22,7 +22,7 @@ function [L]= NNGenerator( neurons, span, input, target )
         L(n).bias = -span + 2*span*rand(neurons(n),1);
     end
     L(length(neurons)+1).weight = -span + 2*span*rand(size(target,1),neurons(end));
-%     L(length(neurons)+1).bias = -span + 2*span*rand(size(target,1),1);
+    L(length(neurons)+1).bias = -span + 2*span*rand(size(target,1),1);
 %     
 %     L(length(neurons)+1).bias = zeros(size_output,1);
 % 

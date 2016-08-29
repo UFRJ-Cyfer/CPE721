@@ -3,6 +3,6 @@ function [ Z, dZ ] = tgh( X )
 %   Detailed explanation goes here
 
 Z = 2./(1+exp(-2*X))-1;
-dZ = 1 - Z.^2;
+dZ = ones(size(Z)) - Z.^2;
 end
 

@@ -6,9 +6,9 @@ function [ output, L ] = feedforward( L, input,...
 neurons = L.neurons;
 normal = 1:length(neurons)+1;
 
-if isrow(input)
-    input = input';
-end
+% if isrow(input)
+%     input = input';
+% end
 
 % L(n).Y = net values
 % L(n).Z = Output
@@ -18,7 +18,7 @@ for n=normal
     if isempty(L(n).bias)
          L(n).Y = (L(n).weight)*L(n).input;
     else
-         L(n).Y = (L(n).weight)*L(n).input + L(n).bias;
+         L(n).Y = (L(n).weight)*L(n).input + repmat(L(n).bias,1,size(input,2));
     end
     [L(n).Z, L(n).dZ] = inner_activation(L(n).Y);
     L(n+1).input = L(n).Z;
