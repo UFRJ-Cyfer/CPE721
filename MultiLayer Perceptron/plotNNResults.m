@@ -1,4 +1,4 @@
-function [ ] = plotNNResults( L,J, input, target, ...
+function [ ] = plotNNResults( L,J,J_v, input, target, ...
     inner_activation, outter_activation)
 %PLOTNNRESULTS Summary of this function goes here
 %   Detailed explanation goes here
@@ -33,7 +33,9 @@ err = zeros(size(target));
     
     subplot(3,1,3)
     plot(J);
-    legend('Cost');
+    hold on;
+    plot(J_v);
+    legend('Train Cost', 'Validation Cost');
     
     figure;
     plot(output)

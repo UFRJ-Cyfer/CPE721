@@ -1,11 +1,15 @@
-function [ L_train , J] = trainResBPBatch( L , input, target, epoch,runs,...
-    csi,eta,lambda,...
+function [ L_train , J, J_v] = trainResBPBatch( L ,...
+    input, target,...
+    valInput,valTarget,...
+    runs,...
+    csi,eta,...
     cost_function,...
     inner_activation, ...
     outter_activation)
 
 %TRAINBPBATCH Summary of this function goes here
 %   Detailed explanation goes here
+ValidationChecks = 6;
 
 neurons = L.neurons;
 normal = 1:length(neurons)+1;
@@ -36,37 +40,40 @@ end
 
 begin = 1; i=1;
 while begin
-    J(i) = 0;
+
     for k=normal
         L(k).db = zeros(size(L(k).bias));
         L(k).dW = zeros(size(L(k).weight));
     end;
-    dJ = 0;
-    J(i) = 0;
-        
         
         [output,L] = feedforward(L,input,...
             inner_activation, outter_activation);
-        
-        %             input(:,m) = output;
-        
+
         [J_, dJ, err] = cost_function(output,target);
         
+        [valOutput,~] = feedforward(L,valInput,...
+            inner_activation,outter_activation);
         
-        J_r = regularization(lambda, L);
+        [VJ, ~, ~] = cost_function(valOutput,valTarget);
+        
+%         J_r = regularization(lambda, L);
 
-         J(i) = J(i) + J_ + J_r;
-%         
-%         if J(i) < Jmin
-%             Jmin = J(i);
-%             L_train = L;
-%         end
-        
-%         if J(i)/epoch > 100000
-%             fprintf('NN Exploded\n')
-%             begin = 0;
-%             break;
-%         end
+         J(i) =  J_/size(input,2);
+         J_v(i) =  VJ/size(input,2);
+
+    if i>1
+       if J_v(i) > 1.05*J_v(i-1)
+            counter = counter+1;
+            Lmin = L;
+       else
+           counter = 0;
+       end
+       if counter == ValidationChecks
+            begin = 0;
+            L_train = Lmin;
+            break;
+       end
+    end
         
         % BP error
         L(length(neurons)+1+1).alpha = dJ;
@@ -115,20 +122,22 @@ while begin
            L(n).bias = L(n).bias + etaB*L(n).db/size(input,2);
         end
     
-    J(i) = J(i)/size(input,2);
+   
     
     if (i>1)
-        if(abs(J(i)-J(i-1))/(J(i)) < delta || i > runs)
-            fprintf('NN attended criteria\n')
-            begin = 0;
-        end
+%         if(abs(J(i)-J(i-1))/(J(i)) < delta || i > runs)
+%             fprintf('NN attended criteria\n')
+%             i
+%             begin = 0;
+%         end
 
         if(i > runs)
             fprintf('NN attended criteria\n')
+            L_train = L;
             begin = 0;
         end
         
-        if rem(i,100) == 0
+        if rem(i,10000) == 0
             i
             %             etaB = etaB*beta;
             %             etaW = etaW*beta;
@@ -137,10 +146,9 @@ while begin
     
     if begin
         i = i+1;
-        etaB = etaB*beta;
-        etaW = etaW*beta;
+%         etaB = etaB*beta;
+%         etaW = etaW*beta;
     end
 end
-L_train = L;
 end
 

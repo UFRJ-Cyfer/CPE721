@@ -9,13 +9,14 @@
 %    input(k,:) = (input(k,:)-mean(input(k,:)))/std(input(k,:));
 % end
 
-net = feedforwardnet([13],'trainrp');
+net = feedforwardnet([13],'trainlm');
 net = configure(net, input, target);
 net.trainParam.epochs = 8000;
 [net,tr] = train(net, input, target);
 
 a = net(input);
+figure;
 plot(a)
 hold on
 plot(target)
-legend('NN Output','Target')
+legend('NN Output LM - Matlab','Target')
