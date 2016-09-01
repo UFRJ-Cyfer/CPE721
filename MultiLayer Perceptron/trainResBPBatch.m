@@ -9,7 +9,7 @@ function [ L_train , J, J_v] = trainResBPBatch( L ,...
 
 %TRAINBPBATCH Summary of this function goes here
 %   Detailed explanation goes here
-ValidationChecks = 6;
+ValidationChecks = 4;
 
 neurons = L.neurons;
 normal = 1:length(neurons)+1;
@@ -30,7 +30,7 @@ a_ = 0.05;
 fprintf('Starting training\n');
 Jmin = 1e6;
 % J = zeros(runs,1);
-
+counter = 0;
 for n=normal
     Delta(n).bias = zeros(size(L(n).bias));
     Delta(n).weight = zeros(size(L(n).weight));
@@ -63,7 +63,7 @@ while begin
 
     if i>1
        if J_v(i) > 1.05*J_v(i-1)
-            counter = counter+1;
+            counter = counter+1
             Lmin = L;
        else
            counter = 0;
@@ -132,12 +132,12 @@ while begin
 %         end
 
         if(i > runs)
-            fprintf('NN attended criteria\n')
+            fprintf('NN attended runs criteria\n')
             L_train = L;
             begin = 0;
         end
         
-        if rem(i,10000) == 0
+        if rem(i,1000) == 0
             i
             %             etaB = etaB*beta;
             %             etaW = etaW*beta;

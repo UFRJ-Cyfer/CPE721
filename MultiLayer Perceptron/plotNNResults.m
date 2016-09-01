@@ -2,7 +2,6 @@ function [ ] = plotNNResults( L,J,J_v, input, target, ...
     inner_activation, outter_activation)
 %PLOTNNRESULTS Summary of this function goes here
 %   Detailed explanation goes here
-close all;
 neurons = L.neurons;
 
 err = zeros(size(target));
